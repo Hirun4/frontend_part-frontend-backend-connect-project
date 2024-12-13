@@ -15,9 +15,10 @@ export const Home = () => {
         try {
 
             const {data} = await axios.post(`${api}`,todo)
+            setTodos([...todos,data])
             console.log(data)
         } catch (error) {
-            
+            console.log("catch error",error)
         }
     }
 
