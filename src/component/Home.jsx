@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const api = "http://localhost:8080/api/todos"
 
@@ -7,6 +7,10 @@ export const Home = () => {
 
     const [title,settitle] = useState();
     const [todos,setTodos] = useState([]);
+
+    useEffect(() => {
+        fetchAllTodo()
+    },[])
 
     const createTodo = async () => {
         const todo = {title}
@@ -17,6 +21,20 @@ export const Home = () => {
             const {data} = await axios.post(`${api}`,todo)
             setTodos([...todos,data])
             console.log(data)
+        } catch (error) {
+            console.log("catch error",error)
+        }
+    }
+
+    const fetchAllTodo = async () => {
+        
+       
+
+        try {
+
+            const {data} = await axios.get(`${api}`)
+            setTodos(data)
+            console.log("all todos",data)
         } catch (error) {
             console.log("catch error",error)
         }
@@ -35,11 +53,11 @@ export const Home = () => {
       </div>
       <h1 className="text-black text-center pt-10 font-bold">List Of Todo</h1>
       <div className="p-5 space-y-2 overflow-y-auto h-[60vh]">
-        {new Array(5).fill(0).map((item, index) => (
+        {todos.map((item, index) => (
           <div className="bg-[#99AAAB] p-3 rounded-md flex items-center justify-between">
             <div className="">
               <p className="text-gray-900 text-sm">
-                {index + 1}. todo{index + 1}.
+                {index + 1}. {item.title}
               </p>
             </div>
             <div className="flex space-x-4">
