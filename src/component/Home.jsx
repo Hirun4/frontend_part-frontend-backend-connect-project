@@ -6,6 +6,11 @@ export const Home = () => {
     const [title,settitle] = useState();
     const [todos,setTodos] = useState([]);
 
+    const createTodo = () => {
+        const data = {title}
+        console.log(data)
+    }
+
   return (
     <div className="w-[50vw] h-[80vh] bg-white rounded-xl ">
       <div className="bg-[#758AA2] p-5 flex gap-5 justify-center rounded-t-xl">
@@ -15,7 +20,7 @@ export const Home = () => {
           type="text"
           onChange={(e) => settitle(e.target.value)}
         />
-        <button className="py-2 px-5 rounded-md bg-[#2B2B52]">Add</button>
+        <button onClick ={createTodo} className="py-2 px-5 rounded-md bg-[#2B2B52]">Add</button>
       </div>
       <h1 className="text-black text-center pt-10 font-bold">List Of Todo</h1>
       <div className="p-5 space-y-2 overflow-y-auto h-[60vh]">
