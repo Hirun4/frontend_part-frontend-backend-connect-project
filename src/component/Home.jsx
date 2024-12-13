@@ -9,10 +9,10 @@ export const Home = () => {
     const [todos,setTodos] = useState([]);
 
     useEffect(() => {
-        fetchAllTodo()
+        fetchAllTodos()
     },[])
 
-    const createTodo = async () => {
+    const createTodos = async () => {
         const todo = {title}
        
 
@@ -26,14 +26,22 @@ export const Home = () => {
         }
     }
 
-    const fetchAllTodo = async () => {
-        
-       
-
+    const fetchAllTodos = async () => {
         try {
 
             const {data} = await axios.get(`${api}`)
             setTodos(data)
+            console.log("all todos",data)
+        } catch (error) {
+            console.log("catch error",error)
+        }
+    }
+
+    const deleteTodos = async (id) => {
+        try {
+
+            const {data} = await axios.delete(`${api}/${id}`)
+            setTodos(todos.filter(todo => todo.id !== id))
             console.log("all todos",data)
         } catch (error) {
             console.log("catch error",error)
@@ -49,7 +57,7 @@ export const Home = () => {
           type="text"
           onChange={(e) => settitle(e.target.value)}
         />
-        <button onClick ={createTodo} className="py-2 px-5 rounded-md bg-[#2B2B52]">Add</button>
+        <button onClick ={createTodos} className="py-2 px-5 rounded-md bg-[#2B2B52]">Add</button>
       </div>
       <h1 className="text-black text-center pt-10 font-bold">List Of Todo</h1>
       <div className="p-5 space-y-2 overflow-y-auto h-[60vh]">
@@ -62,6 +70,7 @@ export const Home = () => {
             </div>
             <div className="flex space-x-4">
               <button
+              onClick={() => deleteTodos(item.id )}
                 className="text-red-600 hover:text-white focus:outline-none rounded-full hover:bg-red-600 p-2"
                 aria-label="Delete"
               >
