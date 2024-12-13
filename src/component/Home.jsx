@@ -1,14 +1,24 @@
+import axios from "axios";
 import React, { useState } from "react";
 
+const api = "http://localhost:8080/api/todos"
 
 export const Home = () => {
 
     const [title,settitle] = useState();
     const [todos,setTodos] = useState([]);
 
-    const createTodo = () => {
-        const data = {title}
-        console.log(data)
+    const createTodo = async () => {
+        const todo = {title}
+       
+
+        try {
+
+            const {data} = await axios.post(`${api}`,todo)
+            console.log(data)
+        } catch (error) {
+            
+        }
     }
 
   return (
